@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<p><a href="{{ url_for('nuevo') }}">+ Nuevo producto</a></p>
 <table>
   <tr><th>ID</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
   {% for p in productos %}
