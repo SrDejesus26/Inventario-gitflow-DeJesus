@@ -7,6 +7,12 @@ init_db()
 
 # --- RUTAS ---
 
+@app.route("/")
+def index():
+    conn = get_db()
+    productos = conn.execute("SELECT * FROM productos ORDER BY id DESC").fetchall()
+    conn.close()
+    return render_template("index.html", productos=productos)
 
 if __name__ == "__main__":
     app.run(debug=True)
