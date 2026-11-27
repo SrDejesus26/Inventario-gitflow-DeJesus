@@ -46,5 +46,14 @@ def editar(id):
         return redirect(url_for("index"))
     return render_template("form.html", titulo="Editar producto", p=p)
 
+@app.route("/eliminar/<int:id>", methods=["POST"])
+def eliminar(id):
+    conn = get_db()
+    conn.execute("DELETE FROM productos WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+    flash("Producto eliminado")
+    return redirect(url_for("index"))
+
 if __name__ == "__main__":
     app.run(debug=True)
