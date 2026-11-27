@@ -28,5 +28,23 @@ def nuevo():
         return redirect(url_for("index"))
     return render_template("form.html", titulo="Nuevo producto", p=None)
 
+@app.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar(id):
+    conn = get_db()
+    if request.method == "POST":
+        conn.execute(
+            "UPDATE productos SET nombre=?, categoria=?, precio=?, stock=? WHERE id=?",
+            (request.form["nombre"], request.form["categoria"],
+             float(request.form["precio"]), int(request.form["stock"]), id))
+        conn.commit()
+        conn.close()
+        flash("Producto actualizado")
+        return redirect(url_for("index"))
+    p = conn.execute("SELECT * FROM productos WHERE id=?", (id,)).fetchone()
+    conn.close()
+    if p is None:
+        return redirect(url_for("index"))
+    return render_template("form.html", titulo="Editar producto", p=p)
+
 if __name__ == "__main__":
     app.run(debug=True)
