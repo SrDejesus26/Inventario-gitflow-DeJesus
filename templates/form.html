@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ titulo }}</h2>
+<form method="post">
+  <p>Nombre: <input name="nombre" value="{{ p.nombre if p else '' }}" required></p>
+  <p>Categoría: <input name="categoria" value="{{ p.categoria if p else '' }}" required></p>
+  <p>Precio: <input name="precio" type="number" step="0.01" min="0" value="{{ p.precio if p else '' }}" required></p>
+  <p>Stock: <input name="stock" type="number" min="0" value="{{ p.stock if p else '' }}" required></p>
+  <button type="submit">Guardar</button>
+  <a href="{{ url_for('index') }}">Cancelar</a>
+</form>
+{% endblock %}
